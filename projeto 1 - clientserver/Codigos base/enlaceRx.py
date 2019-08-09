@@ -70,10 +70,10 @@ class RX(object):
         else:
             return(False)
 
-    def getBufferLen(self):
+    def getBufferLen(self): #######
         """ Return the total number of bytes in the reception buffer
         """
-        return(len(self.buffer))
+        return(len(self.buffer)-4)
 
     def getAllBuffer(self, len):
         """ Read ALL reception buffer and clears it

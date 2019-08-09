@@ -82,7 +82,7 @@ class TX(object):
         """ Return the last transmission size
         """
         print("O tamanho transmitido (Impressao fora do thread)  {}" .format(self.transLen))
-        return(self.transLen)
+        return(self.transLen) #tamanho 
         
 
     def getIsBussy(self):

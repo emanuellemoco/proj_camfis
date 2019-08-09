@@ -13,9 +13,10 @@ print("comecou")
 
 from enlace import *
 
-import time
-inicio = time.time()
-print("comecou a contar")
+import sys, math
+#import time
+#inicio = time.time()
+#print("comecou a contar")
 
 
 # Serial Com Port
@@ -61,12 +62,17 @@ def main():
     txBuffer = open ("imagem.jpg",'rb').read()
 
     txLen    = len(txBuffer)
+    print("tamanho")
     print(txLen)
+
+    txLenByte = (txLen).to_bytes(4, byteorder='big')
 
     # Transmite dado
     print("tentado transmitir .... {} bytes".format(txLen))
-    com.sendData(txBuffer)
-
+    #com.sendData(txLenByte)
+    #com.sendData(txBuffer)   
+    com.sendData(txLenByte + txBuffer) 
+    
     # espera o fim da transmissão
     #while(com.tx.getIsBussy()):
     #    pass
@@ -83,7 +89,7 @@ def main():
     rxBuffer, nRx = com.getData(txLen)
 
     #arquivo que mandou
-    open("fodasse.jpg",'wb').write(rxBuffer)
+    open("naosei.jpg",'wb').write(rxBuffer)
 
     # log
     print ("Lido              {} bytes ".format(nRx))
@@ -96,9 +102,7 @@ def main():
     print("-------------------------")
     com.disable()
 
-    #apos encerrar a comunicacao para o timer
-    fim = time.time() 
-    print("Tempo: ", (fim-inicio))
+  
   
 
     #so roda o main quando for executado do terminal ... se for chamado dentro de outro modulo nao roda
