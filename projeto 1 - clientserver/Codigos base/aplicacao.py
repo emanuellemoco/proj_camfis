@@ -25,7 +25,7 @@ import sys, math
 
 #serialName = "/dev/ttyACM0"           # Ubuntu (variacao de)
 #serialName = "/dev/tty.usbmodem1411" # Mac    (variacao de)
-serialName = "COM3"                  # Windows(variacao de)
+serialName = "/dev/cu.usbmodem14121"                  # Windows(variacao de)
 print("abriu com")
 
 def main():
@@ -65,13 +65,15 @@ def main():
     print("tamanho")
     print(txLen)
 
-    txLenByte = (txLen).to_bytes(4, byteorder='big')
+    txLenByte = (txLen).to_bytes(4, byteorder='little')
+    print(len(txLenByte))
+
 
     # Transmite dado
-    print("tentado transmitir .... {} bytes".format(txLen))
-    #com.sendData(txLenByte)
-    #com.sendData(txBuffer)   
-    com.sendData(txLenByte + txBuffer) 
+    # print("tentado transmitir .... {} bytes".format(txLen))
+    # #com.sendData(txLenByte)
+    # #com.sendData(txBuffer)   
+    # com.sendData(txLenByte + txBuffer) 
     
     # espera o fim da transmissão
     #while(com.tx.getIsBussy()):
@@ -86,13 +88,24 @@ def main():
     print ("Recebendo dados .... ")
     
     #repare que o tamanho da mensagem a ser lida é conhecida!     
-    rxBuffer, nRx = com.getData(txLen)
+    rxBuffer, nRx = com.getData()
 
     #arquivo que mandou
-    open("naosei.jpg",'wb').write(rxBuffer)
+    open("chegou.jpg",'wb').write(rxBuffer)
 
     # log
     print ("Lido              {} bytes ".format(nRx))
+
+    #Mandando tamanho imagem
+    lenDoLen = (4).to_bytes(4, byteorder='little')
+    print(lenDoLen)
+    print("lenDoLen")
+    
+    com.sendData(lenDoLen+(nRx.to_bytes(4, byteorder='little')))
+
+    # txSize = com.tx.getStatus()
+    print ("Transmitido Tamanho da Imagem")
+
     
     print (rxBuffer)
   

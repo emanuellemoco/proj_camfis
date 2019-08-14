@@ -73,7 +73,7 @@ class RX(object):
     def getBufferLen(self): #######
         """ Return the total number of bytes in the reception buffer
         """
-        return(len(self.buffer)-4)
+        return(len(self.buffer))
 
     def getAllBuffer(self, len):
         """ Read ALL reception buffer and clears it
@@ -93,14 +93,19 @@ class RX(object):
         self.threadResume()
         return(b)
 
-    def getNData(self, size):
+    # def getNData(self, size):
+    def getNData(self):
         """ Read N bytes of data from the reception buffer
         This function blocks until the number of bytes is received
         """
-
+        #Pega a len da imagem
+        while(self.getBufferLen() <= 4):
+            time.sleep(0.001)
+        size = int.from_bytes(self.getBuffer(4), byteorder='little')
+        #Pega a imagem
         while(self.getBufferLen() < size):
             time.sleep(0.001)
-#                 
+
         return(self.getBuffer(size))
 
 
