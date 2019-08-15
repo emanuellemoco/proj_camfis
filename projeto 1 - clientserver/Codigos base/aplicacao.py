@@ -91,17 +91,20 @@ def main():
     rxBuffer, nRx = com.getData()
 
     #arquivo que mandou
-    open("chegou.jpg",'wb').write(rxBuffer)
+    open("qnovonome.jpg",'wb').write(rxBuffer)
 
     # log
     print ("Lido              {} bytes ".format(nRx))
 
     #Mandando tamanho imagem
-    lenDoLen = (4).to_bytes(4, byteorder='little')
-    print(lenDoLen)
-    print("lenDoLen")
+    nRxBytes=nRx.to_bytes(4, byteorder='little')
+    # lenDoLen = (len(nRxBytes)).to_bytes(4, byteorder='little')
+    # print(lenDoLen)
+    # print("lenDoLen")
+    print(nRxBytes)
     
-    com.sendData(lenDoLen+(nRx.to_bytes(4, byteorder='little')))
+    com.sendData(nRxBytes)
+
 
     # txSize = com.tx.getStatus()
     print ("Transmitido Tamanho da Imagem")

@@ -37,7 +37,7 @@ class RX(object):
                 rxTemp, nRx = self.fisica.read(self.READLEN)
                 if (nRx > 0):
                     self.buffer += rxTemp
-                time.sleep(0.001)
+                time.sleep(0.0001)
 
     def threadStart(self):
         """ Starts RX thread (generate and run)
@@ -99,7 +99,7 @@ class RX(object):
         This function blocks until the number of bytes is received
         """
         #Pega a len da imagem
-        while(self.getBufferLen() <= 4):
+        while(self.getBufferLen() < 4):
             time.sleep(0.001)
         size = int.from_bytes(self.getBuffer(4), byteorder='little')
         #Pega a imagem
