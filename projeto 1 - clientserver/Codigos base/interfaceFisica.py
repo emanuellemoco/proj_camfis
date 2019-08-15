@@ -20,8 +20,8 @@ class fisica(object):
     def __init__(self, name):
         self.name        = name
         self.port        = None
-        self.baudrate    = 115200  #quantos byte por segundo ele envia (quanto mais alto, maior prob de erro)
-        #self.baudrate    = 9600
+        #self.baudrate    = 115200  #quantos byte por segundo ele envia (quanto mais alto, maior prob de erro)
+        self.baudrate    = 4000000
         self.bytesize    = serial.EIGHTBITS  #manda a informacao de 8 em 8
         self.parity      = serial.PARITY_NONE #e confere
         self.stop        = serial.STOPBITS_ONE

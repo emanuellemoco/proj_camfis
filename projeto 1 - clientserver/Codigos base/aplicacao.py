@@ -32,8 +32,6 @@ def main():
     # Ativa comunicacao
     com.enable()
 
-   
-
     # Log
     print("-------------------------")
     print("Comunicação inicializada")
@@ -43,28 +41,24 @@ def main():
     # Carrega dados
     print ("gerando dados para transmissao :")
   
-      #no exemplo estamos gerando uma lista de bytes ou dois bytes concatenados
-    
+    #no exemplo estamos gerando uma lista de bytes ou dois bytes concatenados
     #exemplo 1
     #ListTxBuffer =list()
     #for x in range(1,10):
     #    ListTxBuffer.append(x)
     #txBuffer = bytes(ListTxBuffer)
-    
-    #exemplo2 (em byte a soma eh o mesmo que append)
 
     #mudar essa parte para imagem mandar imagem 
     #txBuffer = bytes([2]) + bytes([100])+ bytes([8])+ bytes("teste", 'utf-8')
 
-    #para imagem
-    
-
+    #para interface e escolher a imagem
     root = Tk()
     root.filename =  filedialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
     print (root.filename)
-
     txBuffer = open (root.filename,'rb').read()
 
+    #txBuffer = open ("imagem.jpg",'rb').read() #se nao usar interface grafica
+  
     txLen    = len(txBuffer)
     print("tamanho")
     print(txLen)
@@ -73,8 +67,6 @@ def main():
 
     # Transmite dado
     print("tentado transmitir .... {} bytes".format(txLen))
-    #com.sendData(txLenByte)
-    #com.sendData(txBuffer) 
     totalLen = len(txLenByte + txBuffer)
     #print("tamanho total")
     #print(txLenByte)
@@ -87,7 +79,6 @@ def main():
     # espera o fim da transmissão
     #while(com.tx.getIsBussy()):
     #    pass
-    
 
     # Atualiza dados da transmissão
     txSize = com.tx.getStatus()
@@ -95,26 +86,23 @@ def main():
 
     # Faz a recepção dos dados
     print ("Recebendo dados .... ")
-    print("dasd")
     #repare que o tamanho da mensagem a ser lida é conhecida!     
-    rxBuffer, nRx = com.getData()
-    print("paroy de rodar aqui")
+    size = com.getData() 
+    print("server recebeu uma imagem de {}" .format(size))
 
     #arquivo que mandou
     #open("chegouu.jpg",'wb').write(rxBuffer)
-    final =int.from_bytes(rxBuffer,byteorder='little')
-    print("FF")
-    print(rxBuffer)
-   # fim = time.time()
-   #tempo= fim - inicio
-   #print("o tempo total:{}".format(tempo))
-   #taxa=tempo/txLenByte
-   #print("a taxa total:{}".format(taxa))
+    #final =int.from_bytes(rxBuffer,byteorder='little')
+    fim = time.time()
+    tempo= fim - inicio
+    print("o tempo total:{}".format(tempo))
+    taxa=(size+4)/tempo
+    print("a taxa total:{}".format(taxa))
 
     # log
-    print ("Lido              {} bytes ".format(nRx))
+    # print ("Lido              {} bytes ".format(nRx))
     
-    print (rxBuffer)
+    # print (rxBuffer)
   
     # Encerra comunicação
     print("-------------------------")
