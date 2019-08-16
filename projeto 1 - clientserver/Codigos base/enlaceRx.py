@@ -93,12 +93,15 @@ class RX(object):
         self.threadResume()
         return(b)
 
+
     # def getNData(self, size):
+
     def getNData(self):
         """ Read N bytes of data from the reception buffer
         This function blocks until the number of bytes is received
         """
         #Pega a len da imagem
+
         while(self.getBufferLen() < 4):
             time.sleep(0.001)
         size = int.from_bytes(self.getBuffer(4), byteorder='little')
@@ -107,6 +110,22 @@ class RX(object):
             time.sleep(0.001)
 
         return(self.getBuffer(size))
+
+
+        print("entrou Ndata")
+        while(self.getBufferLen() < 4):
+            #print("saindo da leitura da resposta")
+            #print(self.getBufferLen())
+            time.sleep(0.0001)
+        
+        return int.from_bytes(self.getBuffer(4), byteorder='little')
+        
+        #Pega a imagem
+        #while(self.getBufferLen() < size):
+        #    time.sleep(0.001)
+
+        #return(self.getBuffer(size))
+        
 
 
     def clearBuffer(self):

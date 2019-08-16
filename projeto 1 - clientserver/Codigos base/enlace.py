@@ -56,5 +56,10 @@ class enlace(object):
         """
         # print('entrou na leitura e tentara ler ' + str(size) )
         data = self.rx.getNData()
+
        
         return(data, len(data))
+
+        print("sai")
+        return(data)
+
