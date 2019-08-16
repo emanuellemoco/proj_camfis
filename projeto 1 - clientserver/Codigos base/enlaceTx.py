@@ -29,6 +29,7 @@ class TX(object):
         self.threadStop  = False
 
 
+
     def thread(self):
         """ TX thread, to send data in parallel with the code
         """

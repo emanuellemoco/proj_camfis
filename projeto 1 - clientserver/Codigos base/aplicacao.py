@@ -23,7 +23,7 @@ from tkinter import *
 
 #serialName = "/dev/ttyACM0"           # Ubuntu (variacao de)
 #serialName = "/dev/tty.usbmodem1411" # Mac    (variacao de)
-serialName = "COM3"                  # Windows(variacao de)
+serialName = "/dev/cu.usbmodem14121"                  # Windows(variacao de)
 print("abriu com")
 
 def main():
@@ -63,6 +63,17 @@ def main():
     print("tamanho")
     print(txLen)
 
+
+    txLenByte = (txLen).to_bytes(4, byteorder='little')
+    print(len(txLenByte))
+
+
+    # Transmite dado
+    # print("tentado transmitir .... {} bytes".format(txLen))
+    # #com.sendData(txLenByte)
+    # #com.sendData(txBuffer)   
+    # com.sendData(txLenByte + txBuffer) 
+
     txLenByte = (txLen).to_bytes(4, byteorder='little') #passando para bytes
 
     # Transmite dado
@@ -75,6 +86,7 @@ def main():
    
     inicio = time.time()
     print("comecou a contar")
+
     
     # espera o fim da transmissão
     #while(com.tx.getIsBussy()):
@@ -87,6 +99,29 @@ def main():
     # Faz a recepção dos dados
     print ("Recebendo dados .... ")
     #repare que o tamanho da mensagem a ser lida é conhecida!     
+
+    rxBuffer, nRx = com.getData()
+
+    #arquivo que mandou
+    open("prova.jpg",'wb').write(rxBuffer)
+
+    # log
+    print ("Lido              {} bytes ".format(nRx))
+
+    #Mandando tamanho imagem
+    nRxBytes=nRx.to_bytes(4, byteorder='little')
+    # lenDoLen = (len(nRxBytes)).to_bytes(4, byteorder='little')
+    # print(lenDoLen)
+    # print("lenDoLen")
+    print(nRxBytes)
+    
+    com.sendData(nRxBytes)
+
+
+    # txSize = com.tx.getStatus()
+    print ("Transmitido Tamanho da Imagem")
+
+
     size = com.getData() 
     print("server recebeu uma imagem de {}" .format(size))
 
@@ -101,6 +136,7 @@ def main():
 
     # log
     # print ("Lido              {} bytes ".format(nRx))
+
     
     # print (rxBuffer)
   
