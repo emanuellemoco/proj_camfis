@@ -91,7 +91,7 @@ def main():
     rxBuffer, nRx = com.getData()
 
     #arquivo que mandou
-    open("qnovonome.jpg",'wb').write(rxBuffer)
+    open("prova.jpg",'wb').write(rxBuffer)
 
     # log
     print ("Lido              {} bytes ".format(nRx))
